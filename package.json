@@ -1,6 +1,6 @@
 {
-  "name": "shigyo-pathflow",
-  "version": "3.4.0",
+  "name": "seisaku-pathflow",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
