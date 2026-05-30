@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="theme.css">
 
 <!-- Amplitude SDK (§2-2: LP_ID直接埋め込み) -->
-<script type="module">
-import * as amplitude from 'https://cdn.amplitude.com/libs/analytics-browser-2.3.3-min.esm.gz.js';
+<script src="https://cdn.amplitude.com/libs/analytics-browser-2.3.3-min.js"></script>
+<script>
 const AMP_KEY = '8d3b5be866c4740fa6c83949f85ce25e';
 const LP_ID   = 'seisaku-v1';
 amplitude.init(AMP_KEY, { defaultTracking: true });
