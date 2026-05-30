@@ -12,16 +12,14 @@
 
 <!-- Amplitude SDK (§2-2: LP_ID直接埋め込み) -->
 <script>
-const AMP_KEY = '8d3b5be866c4740fa6c83949f85ce25e';
-const LP_ID   = 'seisaku-v1';
 (function() {
+  var AMP_KEY = '8d3b5be866c4740fa6c83949f85ce25e';
   var s = document.createElement('script');
   s.src = 'https://cdn.amplitude.com/libs/analytics-browser-2.3.3-min.js';
   s.onload = function() {
     amplitude.init(AMP_KEY, { defaultTracking: true });
-    amplitude.track('page_view', { lp: LP_ID });
-    window._amp   = amplitude;
-    window._LP_ID = LP_ID;
+    // page_view は main script の LP_ID 確定後に発火（window._amp 経由）
+    window._amp = amplitude;
   };
   document.head.appendChild(s);
 })();
@@ -504,6 +502,10 @@ footer { border-top: 1px solid var(--border); padding: 3rem; text-align: center;
 
 <script>
 const LP_ID = 'seisaku-v1';
+// page_view（§2-2: lp 必須）SDKロード完了後に発火
+window.addEventListener('load', function() {
+  if (window._amp) window._amp.track('page_view', { lp: LP_ID });
+});
 let currentStep    = 1;
 let diagResult     = null;
 let QS             = null;
