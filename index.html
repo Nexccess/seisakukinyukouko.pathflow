@@ -22,17 +22,18 @@
 </script> -->
 
 <!-- Amplitude SDK -->
-<script src="https://unpkg.com/@amplitude/analytics-browser@2/dist/analytics-browser.min.js"></script>
-<script>
-window.addEventListener('load', function() {
-  const AMP_KEY = '8d3b5be866c4740fa6c83949f85ce25e';
-  const LP_ID   = 'seisaku-v1';
-  amplitude.init(AMP_KEY, { defaultTracking: true });
+<script type="module">
+import * as amplitude from 'https://cdn.amplitude.com/libs/analytics-browser-2.3.3-min.esm.gz.js';
 
-  // ── ページビュー
-  amplitude.track('page_view', { lp: LP_ID });
+const AMP_KEY = '8d3b5be866c4740fa6c83949f85ce25e';
+const LP_ID   = 'seisaku-v1';
+amplitude.init(AMP_KEY, { defaultTracking: true });
 
-  // ── FCBボタン計測
+// ── ページビュー（§2-2: lp 必須）
+amplitude.track('page_view', { lp: LP_ID });
+
+// ── FCBボタン計測（フローティングバー）
+document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.fcb-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const method = btn.querySelector('.fcb-main')?.textContent?.trim() || '';
@@ -40,7 +41,7 @@ window.addEventListener('load', function() {
     });
   });
 
-  // ── AI診断ボタン
+  // ── AI診断ボタン（§2-2: lp 必須）
   document.querySelectorAll('a[href*="diagnosis"]').forEach(el => {
     el.addEventListener('click', () => {
       amplitude.track('diagnosis_click', { lp: LP_ID });
@@ -67,8 +68,7 @@ window.addEventListener('load', function() {
       amplitude.track('column_click', { column: el.href, lp: LP_ID });
     });
   });
-
-}); // window.addEventListener の閉じ
+});
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
