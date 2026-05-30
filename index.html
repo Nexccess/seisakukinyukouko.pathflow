@@ -22,16 +22,21 @@
 </script> -->
 
 <!-- Amplitude SDK -->
-<script src="https://cdn.amplitude.com/libs/analytics-browser-2.3.3-min.js"></script>
 <script>
 const AMP_KEY = '8d3b5be866c4740fa6c83949f85ce25e';
 const LP_ID   = 'seisaku-v1';
-amplitude.init(AMP_KEY, { defaultTracking: true });
-// ── page_view（§2-2: lp 必須）
-amplitude.track('page_view', { lp: LP_ID });
-// グローバルに公開
-window._amp   = amplitude;
-window._LP_ID = LP_ID;
+// Amplitude SDK を動的ロードし、完了後に init（§2-2: lp 必須）
+(function() {
+  var s = document.createElement('script');
+  s.src = 'https://cdn.amplitude.com/libs/analytics-browser-2.3.3-min.js';
+  s.onload = function() {
+    amplitude.init(AMP_KEY, { defaultTracking: true });
+    amplitude.track('page_view', { lp: LP_ID });
+    window._amp   = amplitude;
+    window._LP_ID = LP_ID;
+  };
+  document.head.appendChild(s);
+})();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
